@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function ManageSavedProjects({ savedProjects, setSavedProjects }) {
+    
     //DUPLICATE PROJECT
     const duplicateProject = () => {
         const projectToDuplicate = savedProjects.find(({ id }) => id === Number(projectId));
-
-        projectToDuplicate.id = savedProjects.length + 1; // Good enough for now
-        projectToDuplicate.name = `${projectToDuplicate.name}_copy`;
-        savedProjects.push(projectToDuplicate);
+        const duplicatedProject = { ...projectToDuplicate };
+        duplicatedProject.id = savedProjects.length + 1; // Good enough for now
+        duplicatedProject.name = `${projectToDuplicate.name}_copy`;
+        savedProjects.push(duplicatedProject);
         setSavedProjects([...savedProjects]);
         localStorage.setItem('projects', JSON.stringify(savedProjects));
     }
@@ -18,6 +19,7 @@ export default function ManageSavedProjects({ savedProjects, setSavedProjects })
     const deleteProject = () => {
         savedProjects.splice(savedProjects.findIndex(({ id }) => id === Number(projectId)), 1);
         setSavedProjects([...savedProjects]);
+        localStorage.setItem('projects', JSON.stringify(savedProjects));
     }
 
 
@@ -38,6 +40,7 @@ export default function ManageSavedProjects({ savedProjects, setSavedProjects })
     }
     return (
         <div className="load-project-section">
+            {/* {savedProjects.length === 0 && <p>No saved projects</p>} */}
             <h3>Manage my Projects</h3>
             <select name="Projects" size={savedProjects.length} id="savedProjects" onChange={getProjectId()}>
                 {savedProjects.map(({ name, id }) => (
@@ -49,7 +52,7 @@ export default function ManageSavedProjects({ savedProjects, setSavedProjects })
                 <button onClick={deleteProject} className="btn">Delete</button>
                 <button onClick={loadProject} className="btn">Load</button>
             </div>
-            <button onClick={cancel} className="cancel-btn">Cancel</button>
+            <button onClick={cancel} className="simple-btn">Cancel</button>
         </div>
     )
 }

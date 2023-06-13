@@ -1,3 +1,11 @@
+:root {
+  --blue: #439b89;
+  --off-white: #f7f7f7;
+  --grey: #333;
+  --medium-grey: #666;
+  --light-grey: #bbb;
+}
+
 /* REUSABLE STYLES */
 * {
   margin: 0;
@@ -8,7 +16,14 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #dedede;
+  background-color: var(--off-white);
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--grey);
 }
 
 h3 {
@@ -25,9 +40,16 @@ h4 {
   font-weight: 600;
 }
 
+h5 {
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.4px;
+  margin-top: 10px;
+}
+
 input {
-    padding-left: 10px;
-    color: #333;
+  padding-left: 10px;
+  color: #333;
 }
 
 button {
@@ -52,6 +74,7 @@ button:hover {
 .inline {
   display: flex;
   align-items: baseline;
+  width: 100%;
 }
 
 .flex-end {
@@ -141,8 +164,8 @@ a {
 }
 
 .btn {
-  background-color: #bbb;
-  border: #999 solid 2px;
+  background-color: var(--light-grey);
+  border: var(--medium-grey) solid 2px;
   width: 100px;
   padding: 5px;
   text-align: center;
@@ -161,12 +184,12 @@ a {
   width: 100%;
   margin-top: 20px;
   padding-top: 15px;
-  border-top: #999 solid 2px;
+  border-top: var(--light-grey) solid 2px;
 }
 
 select {
   height: 200px;
-  border: #999 solid 2px;
+  border: var(--light-grey) solid 2px;
   border-radius: 5px;
   margin: 15px 0;
   padding: 5px;
@@ -182,27 +205,41 @@ option {
   justify-content: space-between;
 }
 
-.cancel-btn {
+.simple-btn {
   text-decoration: underline;
   background: none;
-  color: #eee;
+  color: var(--off-white);
   box-shadow: none;
   border: none;
   font-size: 1.1rem;
 }
 
-
 /* WINDOW 3 */
 
 .window-3 {
   width: 950px;
+  display: flex;
+}
+
+.window-3 .information-input {
+  color: var(--off-white);
+}
+
+.left {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.right {
+  width: 50%;
+  margin: 20px auto;
 }
 
 .back-section {
   display: flex;
   align-items: center;
   width: 300px;
-  border-bottom: #999 solid 3px;
+  border-bottom: var(--medium-grey) solid 3px;
 }
 
 .back-section:hover {
@@ -211,5 +248,80 @@ option {
 
 .arrow {
   font-size: 1.2rem;
-  margin:  10px;
+  margin: 10px;
+}
+
+.project-information {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+}
+
+.project-bold-font,
+h3 span {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.smaller-font {
+  font-size: 1.3rem;
+  width: 100%;
+}
+
+.window-3 input {
+  background-color: var(--grey);
+  box-shadow: none;
+  border: 1px solid var(--medium-grey);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.window-3 input:disabled {
+  border: none;
+}
+
+.drag-drop-inline {
+  display: flex;
+}
+
+.drag-drop-box {
+  transform: scale(0.9);
+  width: 200px;
+  text-align: center;
+  background-color: var(--medium-grey);
+  padding: 10px;
+  border-radius: 5px;
+  border: var(--blue) dotted 2px;
+  margin: 5px;
+}
+
+.empty-box {
+  transform: scale(0.9);
+  text-align: center;
+  width: 200px;
+  border: var(--blue) dotted 2px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.drag-drop-box p {
+  color: var(--grey);
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.empty-box p {
+  color: var(--medium-grey);
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.empty-box h1 {
+  color: var(--medium-grey);
+}
+
+.edit-btn {
+  margin: 50px 20px;
 }

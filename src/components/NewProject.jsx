@@ -24,7 +24,7 @@ export default function NewProject({ savedProjects, setSavedProjects }) {
         const newProject = {
             author: 'pomerleau_tester', // Hardcoded for now
             name: projectName,
-            date: dateBool ? new Date().toLocaleDateString() : '',
+            date: dateBool ? new Date().toLocaleDateString() : 'Not defined',
             id: savedProjects.length + 1 //Good enough for now maybe change later
         }
         savedProjects.push(newProject);

@@ -4,6 +4,8 @@ import CardHeader from "../components/CardHeader";
 import NewProject from "../components/NewProject";
 import ManageSavedProjects from "../components/ManageSavedProjects";
 
+import data from '../data/default_projects.json'
+
 import '../index.css'
  
 export default function Window2() {
@@ -11,8 +13,9 @@ export default function Window2() {
 
   // SETUP LOCAL STORAGE AND LOAD PROJECTS
   useEffect(() => {
-    if (!localStorage.getItem('projects')) {
-      localStorage.setItem('projects', JSON.stringify([]));
+    if (localStorage.getItem('projects') === null) {
+      localStorage.setItem('projects', JSON.stringify(data));
+      setSavedProjects(data);
     } else {
       setSavedProjects(JSON.parse(localStorage.getItem('projects')));
     }
