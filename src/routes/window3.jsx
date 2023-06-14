@@ -43,7 +43,7 @@ export default function Window3() {
 
 
   //DROPZONE PROPS
-  const dragDropBoxes = [
+  const dropzoneList = [
     {
       title: 'PDF',
       acceptedObject: {
@@ -162,7 +162,8 @@ export default function Window3() {
                   />
                 </div>
               </div>
-              <div className="drag-drop-inline">
+              {/* unclear if this is needed for the purpose of this demo */}
+              {/* <div className="drag-drop-inline">
                 <div className="drag-drop-box">
                   <h1>Order doc.</h1>
                   <p>Drag/Drop</p>
@@ -171,7 +172,7 @@ export default function Window3() {
                   <h1>Delivered</h1>
                   <p>Drag/Drop</p>
                 </div>
-              </div>
+              </div> */}
               {isEditing ? (
                 <div className="edit-buttons">
                   <button className='simple-btn edit-btn' onClick={saveProject}>Save</button>
@@ -182,7 +183,7 @@ export default function Window3() {
               )}
             </div>
             <div className="right">
-              {dragDropBoxes.map(({id, title, acceptedObject }) => {
+              {dropzoneList.map(({id, title, acceptedObject }) => {
                 return (
                  <Dropzone key={id} title={title} acceptedObject={acceptedObject} project={project}/>
                 )
