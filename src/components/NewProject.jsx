@@ -16,9 +16,9 @@ export default function NewProject({ savedProjects, setSavedProjects }) {
 
     //Create project
     const createProject = () => {
-        //Check if name has illegal characters
+        //Check for illegal characters
         if (/^[A-Za-z0-9_-~]+$/.test(projectName) === false || projectName === '') {
-            alert('Project name cannot contain illegal characters');
+            alert('Project name cannot contain illegal characters or is empty');
             return;
         }
         const newProject = {

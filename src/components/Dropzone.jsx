@@ -16,7 +16,7 @@ const rejectStyle = {
     borderColor: '#ff1744'
 };
 
-export default function Dropzone({ title, acceptedObject }) {
+export default function Dropzone({ title, acceptedObject, project }) {
     const {
         acceptedFiles,
         getRootProps,
@@ -28,13 +28,21 @@ export default function Dropzone({ title, acceptedObject }) {
 
     const file = acceptedFiles[0];
 
+
     useEffect(() => {
         if (file) {
-            //upload to local storage
-            
+            //upload to server
+            // const data = new FormData() 
+            // data.append('file', this.state.selectedFile)
+            // axios.post("http://localhost:8000/upload", data, {
+                
+            // })
 
-
-            console.log(file);
+            // for the purpose of this front-end demo save the file to local storage
+            const projects = JSON.parse(localStorage.getItem('projects'));
+            const projectIndex = projects.findIndex(({ name }) => name === project.name);
+            projects[projectIndex].file = file;
+            localStorage.setItem('projects', JSON.stringify(projects));
         }
     }, [file]);
 
@@ -56,8 +64,8 @@ export default function Dropzone({ title, acceptedObject }) {
                 <p>Drag/Drop</p>
             </div>
             <div className="empty-box">
-                {file ? <h1>{file.path}</h1> : <h1>NOT SET</h1>}
-                <p>Drag/Drop</p>
+                {file ? <h1>File saved!</h1> : <h1>NOT SET</h1>}
+                {file ? <p>{file.path}</p> : <p>Drag/Drop</p>}
             </div>
         </div>
     );
