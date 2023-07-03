@@ -34,7 +34,7 @@ export default function Dropzone({ title, acceptedObject, project }) {
             //upload to server
             // const data = new FormData() 
             // data.append('file', this.state.selectedFile)
-            // axios.post("http://localhost:8000/upload", data, {
+            // axios.post("http://localhost:3000/upload", data, {
                 
             // })
 
