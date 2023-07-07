@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function NewProject({ savedProjects, setSavedProjects }) {
     //Set name
@@ -33,7 +34,7 @@ export default function NewProject({ savedProjects, setSavedProjects }) {
         }
         savedProjects.push(newProject);
         setSavedProjects([...savedProjects]);
-        localStorage.setItem('projects', JSON.stringify(savedProjects));
+        axios.post('http://localhost:3000/projects', newProject);
         setProjectName('');
     }
 

@@ -1,17 +1,28 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Dropzone from '../components/Dropzone';
 import '../index.css';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 
 export default function Window3() {
-  //Get project in local storage
   const [project, setProject] = useState({});
+  const [projects, setProjects] = useState([]);
+  
+  // Get project on server side with axios
   useEffect(() => {
     const projectName = window.location.pathname.split('/')[1];
-    const projects = JSON.parse(localStorage.getItem('projects'));
-    const project = projects.find(({ name }) => name === projectName);
-    setProject(project);
+    axios.get(`http://localhost:3000/projects/${projectName}`)
+      .then(res => {
+        setProject(res.data);
+      })
+      .catch(err => console.log(err));
+
+      axios.get('http://localhost:3000/projects')
+      .then(res => {
+        setProjects(res.data);
+      })
+      .catch(err => console.log(err));
   }, []);
 
   const navigate = useNavigate();
@@ -27,17 +38,20 @@ export default function Window3() {
 
   const saveProject = () => {
     setIsEditing(false);
-    const projects = JSON.parse(localStorage.getItem('projects'));
-    const projectIndex = projects.findIndex(({ name }) => name === project.name);
-    projects[projectIndex] = project;
-    localStorage.setItem('projects', JSON.stringify(projects));
+    axios.put(`http://localhost:3000/projects/${project.name}`, project, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        console.log(res.data);
+      }
+      )
+      .catch(err => console.log(err));
   }
 
   const cancelEdit = () => {
     setIsEditing(false);
-    const projectName = window.location.pathname.split('/')[1];
-    const projects = JSON.parse(localStorage.getItem('projects'));
-    const project = projects.find(({ name }) => name === projectName);
     setProject(project);
   }
 
@@ -162,17 +176,6 @@ export default function Window3() {
                   />
                 </div>
               </div>
-              {/* unclear if this is needed for the purpose of this demo */}
-              {/* <div className="drag-drop-inline">
-                <div className="drag-drop-box">
-                  <h1>Order doc.</h1>
-                  <p>Drag/Drop</p>
-                </div>
-                <div className="drag-drop-box">
-                  <h1>Delivered</h1>
-                  <p>Drag/Drop</p>
-                </div>
-              </div> */}
               {isEditing ? (
                 <div className="edit-buttons">
                   <button className='simple-btn edit-btn' onClick={saveProject}>Save</button>

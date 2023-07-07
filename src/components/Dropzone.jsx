@@ -1,5 +1,6 @@
 import { useDropzone } from 'react-dropzone'
 import { useEffect, useMemo } from 'react';
+import axios from 'axios';
 
 const focusedStyle = {
     transform: 'scale(1.05)',
@@ -31,18 +32,20 @@ export default function Dropzone({ title, acceptedObject, project }) {
 
     useEffect(() => {
         if (file) {
-            //upload to server
-            // const data = new FormData() 
-            // data.append('file', this.state.selectedFile)
-            // axios.post("http://localhost:3000/upload", data, {
-                
-            // })
+            // upload to server
+            const formData = new FormData();
+            formData.append('file', file);
+            axios.post(`http://localhost:3000/projects/${project.name}/upload`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(res => {
+                    console.log(res.data);
+                }
+                )
+                .catch(err => console.log(err));
 
-            // for the purpose of this front-end demo save the file to local storage
-            const projects = JSON.parse(localStorage.getItem('projects'));
-            const projectIndex = projects.findIndex(({ name }) => name === project.name);
-            projects[projectIndex].file = file;
-            localStorage.setItem('projects', JSON.stringify(projects));
         }
     }, [file]);
 

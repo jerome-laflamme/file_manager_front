@@ -6,17 +6,17 @@ import {
 } from "react-router-dom";
 import "./index.css";
 
+
 import Window1 from "./routes/window1";
 import Window2 from "./routes/window2";
 import Window3 from "./routes/window3";
 
 import ErrorPage from "./components/ErrorPage";
 
-
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Window1 />,
+        element: <Window1  />,
         errorElement: <ErrorPage />,
     },
     {

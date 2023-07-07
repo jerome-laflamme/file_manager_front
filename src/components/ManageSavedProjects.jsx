@@ -1,30 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from 'axios';
 
 export default function ManageSavedProjects({ savedProjects, setSavedProjects }) {
-    
-    //DUPLICATE PROJECT
-    const duplicateProject = () => {
-        const projectToDuplicate = savedProjects.find(({ id }) => id === Number(projectId));
-        const duplicatedProject = { ...projectToDuplicate };
-        duplicatedProject.id = savedProjects.length + 1; // Good enough for now
-        duplicatedProject.name = `${projectToDuplicate.name}_copy`;
-        savedProjects.push(duplicatedProject);
-        setSavedProjects([...savedProjects]);
-        localStorage.setItem('projects', JSON.stringify(savedProjects));
-    }
-
-    //DELETE PROJECT
-    const deleteProject = () => {
-        savedProjects.splice(savedProjects.findIndex(({ id }) => id === Number(projectId)), 1);
-        setSavedProjects([...savedProjects]);
-        localStorage.setItem('projects', JSON.stringify(savedProjects));
-    }
-
-
+    const [projectId, setProjectId] = useState(1);
     //LOAD PROJECT
-    const [projectId, setProjectId] = useState(0);
     const getProjectId = () => {
         return (e) => setProjectId(e.target.value);
     }
@@ -33,6 +14,26 @@ export default function ManageSavedProjects({ savedProjects, setSavedProjects })
     const loadProject = () => {
         const projectName = savedProjects.find(({ id }) => id === Number(projectId)).name;
         navigate(`/${projectName}`);
+    }
+
+    //DUPLICATE PROJECT
+    const duplicateProject = () => {
+        const projectToDuplicate = savedProjects.find(({ id }) => id === Number(projectId));
+        const duplicatedProject = { ...projectToDuplicate };
+        duplicatedProject.name = `${projectToDuplicate.name}_copy`;
+        duplicatedProject.id = savedProjects.length + 1;
+        savedProjects.push(duplicatedProject);
+        setSavedProjects([...savedProjects]);
+        axios.post(`http://localhost:3000/projects/${projectToDuplicate.name}/duplicate`, duplicatedProject)
+        .catch(err => console.log(err));
+    }
+
+    //DELETE PROJECT
+    const deleteProject = () => {
+        const name = savedProjects.find(({ id }) => id === Number(projectId)).name;
+        savedProjects.splice(savedProjects.findIndex(({ id }) => id === Number(projectId)), 1);
+        setSavedProjects([...savedProjects]);
+        axios.delete(`http://localhost:3000/projects/${name}`)
     }
 
     const cancel = () => {
